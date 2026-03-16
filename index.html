@@ -1,0 +1,1894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Aryan Pratap Singh — Cybersecurity Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #020608;
+    --bg2: #050d10;
+    --surface: #091318;
+    --surface2: #0d1c23;
+    --border: #0e2d38;
+    --accent: #00e5ff;
+    --accent2: #00ff88;
+    --accent3: #ff3e3e;
+    --accent4: #ffd600;
+    --text: #c8e6ea;
+    --text-dim: #4a7a85;
+    --text-bright: #e8f8fb;
+    --font-mono: 'Share Tech Mono', monospace;
+    --font-body: 'JetBrains Mono', monospace;
+    --font-display: 'Syne', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* SCANLINE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,229,255,0.012) 2px,
+      rgba(0,229,255,0.012) 4px
+    );
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* GRID BACKGROUND */
+  .grid-bg {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image:
+      linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 48px;
+    background: rgba(2,6,8,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: var(--font-mono);
+    font-size: 15px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+  }
+
+  .nav-logo span { color: var(--accent2); }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-dim);
+    text-decoration: none;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  /* HERO */
+  #hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 0 48px;
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  .hero-glow {
+    position: absolute;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(0,229,255,0.08) 0%, transparent 70%);
+    top: -100px; right: -100px;
+    pointer-events: none;
+  }
+
+  .hero-glow2 {
+    position: absolute;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(0,255,136,0.05) 0%, transparent 70%);
+    bottom: 0; left: 200px;
+    pointer-events: none;
+  }
+
+  .hero-content {
+    max-width: 900px;
+    animation: fadeUp 0.9s ease both;
+  }
+
+  .hero-tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--accent2);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .hero-tag::before {
+    content: '';
+    width: 32px; height: 1px;
+    background: var(--accent2);
+  }
+
+  .hero-name {
+    font-family: var(--font-display);
+    font-size: clamp(42px, 6vw, 80px);
+    font-weight: 800;
+    line-height: 1.0;
+    color: var(--text-bright);
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+
+  .hero-name .accent { color: var(--accent); }
+
+  .hero-title {
+    font-family: var(--font-mono);
+    font-size: clamp(14px, 2vw, 18px);
+    color: var(--text-dim);
+    margin-bottom: 28px;
+    letter-spacing: 0.05em;
+  }
+
+  .hero-title .hl { color: var(--accent2); }
+
+  .hero-summary {
+    font-size: 14px;
+    color: var(--text);
+    max-width: 620px;
+    margin-bottom: 36px;
+    line-height: 1.8;
+    opacity: 0.85;
+  }
+
+  .domain-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 40px;
+  }
+
+  .pill {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    padding: 5px 14px;
+    border: 1px solid;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .pill-cyan { border-color: rgba(0,229,255,0.4); color: var(--accent); background: rgba(0,229,255,0.05); }
+  .pill-green { border-color: rgba(0,255,136,0.4); color: var(--accent2); background: rgba(0,255,136,0.05); }
+  .pill-red { border-color: rgba(255,62,62,0.4); color: var(--accent3); background: rgba(255,62,62,0.05); }
+  .pill-yellow { border-color: rgba(255,214,0,0.4); color: var(--accent4); background: rgba(255,214,0,0.05); }
+
+  .hero-ctas {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 12px 28px;
+    background: var(--accent);
+    color: #000;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+    font-weight: 700;
+    display: inline-block;
+  }
+
+  .btn-primary:hover { background: #fff; transform: translateY(-2px); }
+
+  .btn-outline {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 12px 28px;
+    background: transparent;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+    display: inline-block;
+  }
+
+  .btn-outline:hover { background: rgba(0,229,255,0.1); transform: translateY(-2px); }
+
+  .hero-terminal {
+    position: absolute;
+    right: 48px;
+    bottom: 60px;
+    width: 380px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    opacity: 0.7;
+    animation: fadeUp 1.2s ease both;
+    animation-delay: 0.3s;
+  }
+
+  .terminal-bar {
+    background: var(--surface2);
+    padding: 8px 14px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .t-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .t-red { background: #ff5f56; }
+  .t-yellow { background: #ffbd2e; }
+  .t-green { background: #27c93f; }
+  .t-title { color: var(--text-dim); margin-left: 8px; font-size: 10px; }
+
+  .terminal-body { padding: 16px; line-height: 2.0; }
+  .t-prompt { color: var(--accent2); }
+  .t-cmd { color: var(--text-bright); }
+  .t-out { color: var(--text-dim); }
+  .t-accent { color: var(--accent); }
+  .t-cursor {
+    display: inline-block;
+    width: 7px; height: 13px;
+    background: var(--accent);
+    vertical-align: middle;
+    animation: blink 1s step-end infinite;
+  }
+
+  /* SECTION SHARED */
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 100px 48px;
+  }
+
+  .section-header {
+    margin-bottom: 64px;
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-label::before {
+    content: '';
+    width: 24px; height: 1px;
+    background: var(--accent);
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 800;
+    color: var(--text-bright);
+    letter-spacing: -0.02em;
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0 48px;
+  }
+
+  /* ABOUT */
+  #about {
+    background: var(--bg2);
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  .about-text p {
+    margin-bottom: 20px;
+    color: var(--text);
+    line-height: 1.9;
+    opacity: 0.9;
+  }
+
+  .about-text .highlight {
+    color: var(--accent);
+    font-family: var(--font-mono);
+  }
+
+  .stat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-top: 8px;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 24px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .stat-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-3px);
+  }
+
+  .stat-num {
+    font-family: var(--font-display);
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .stat-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* PROJECTS */
+  #projects {
+    background: var(--bg);
+  }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2px;
+  }
+
+  /* PROJECT CASE STUDY CARDS */
+  .project-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 36px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.25s, transform 0.25s;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .project-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-4px);
+    z-index: 2;
+  }
+
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+  }
+
+  .card-red::before { background: var(--accent3); }
+  .card-cyan::before { background: var(--accent); }
+  .card-green::before { background: var(--accent2); }
+
+  .project-num {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.3em;
+  }
+
+  .project-type {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    padding: 3px 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .type-offensive { background: rgba(255,62,62,0.12); color: var(--accent3); border: 1px solid rgba(255,62,62,0.3); }
+  .type-defensive { background: rgba(0,229,255,0.12); color: var(--accent); border: 1px solid rgba(0,229,255,0.3); }
+  .type-research { background: rgba(0,255,136,0.12); color: var(--accent2); border: 1px solid rgba(0,255,136,0.3); }
+
+  .project-title {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-bright);
+    line-height: 1.2;
+  }
+
+  .project-tagline {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  .project-tech-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 4px;
+  }
+
+  .tech-badge {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    padding: 3px 8px;
+    background: rgba(14,45,56,0.6);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    letter-spacing: 0.05em;
+  }
+
+  .project-impact {
+    margin-top: auto;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+
+  .impact-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .impact-stat {
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 700;
+  }
+
+  .impact-cyan { color: var(--accent); }
+  .impact-green { color: var(--accent2); }
+  .impact-red { color: var(--accent3); }
+
+  /* CASE STUDY MODAL / EXPANDED */
+  .case-study {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 200;
+    background: rgba(2,6,8,0.97);
+    overflow-y: auto;
+    padding: 80px 48px 48px;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .case-study.active { display: block; }
+
+  .case-close {
+    position: fixed;
+    top: 20px; right: 36px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-dim);
+    cursor: pointer;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 8px 16px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    transition: all 0.2s;
+    z-index: 201;
+  }
+
+  .case-close:hover { color: var(--accent3); border-color: var(--accent3); }
+
+  .case-inner {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .case-header { margin-bottom: 48px; }
+
+  .case-section {
+    margin-bottom: 36px;
+  }
+
+  .case-section-title {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .case-section-title .cs-num {
+    color: var(--text-dim);
+  }
+
+  .case-body {
+    color: var(--text);
+    line-height: 1.85;
+    font-size: 13px;
+  }
+
+  .case-body ul {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .case-body ul li {
+    padding-left: 20px;
+    position: relative;
+    margin-bottom: 6px;
+  }
+
+  .case-body ul li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+  }
+
+  .threat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2px;
+    margin-top: 12px;
+  }
+
+  .threat-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 20px;
+  }
+
+  .threat-box-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .threat-box-value {
+    font-size: 13px;
+    color: var(--text-bright);
+    line-height: 1.5;
+  }
+
+  .tools-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  .tool-chip {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    padding: 6px 14px;
+    background: var(--surface);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    letter-spacing: 0.08em;
+  }
+
+  .links-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+  }
+
+  .case-link {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    padding: 8px 20px;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: all 0.2s;
+  }
+
+  .case-link:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* SKILLS */
+  #skills {
+    background: var(--bg2);
+  }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+  }
+
+  .skill-category {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 28px;
+    transition: border-color 0.2s;
+  }
+
+  .skill-category:hover { border-color: var(--accent); }
+
+  .skill-cat-title {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .skill-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .skill-list li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text);
+  }
+
+  .skill-list li::before {
+    content: '//';
+    color: var(--text-dim);
+    font-size: 10px;
+  }
+
+  .skill-bar-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 4px;
+  }
+
+  .skill-bar {
+    flex: 1;
+    height: 2px;
+    background: var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .skill-fill {
+    height: 100%;
+    background: var(--accent);
+    position: absolute;
+    top: 0; left: 0;
+    transition: width 1.5s ease;
+  }
+
+  /* EXPERIENCE */
+  #experience {
+    background: var(--bg);
+  }
+
+  .exp-timeline {
+    position: relative;
+    max-width: 860px;
+  }
+
+  .exp-timeline::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 1px;
+    background: var(--border);
+  }
+
+  .exp-item {
+    padding-left: 40px;
+    margin-bottom: 56px;
+    position: relative;
+  }
+
+  .exp-item::before {
+    content: '';
+    position: absolute;
+    left: -4px; top: 8px;
+    width: 9px; height: 9px;
+    background: var(--accent);
+    border: 2px solid var(--bg);
+    border-radius: 50%;
+  }
+
+  .exp-date {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .exp-role {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-bright);
+    margin-bottom: 4px;
+  }
+
+  .exp-company {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--accent);
+    margin-bottom: 16px;
+    letter-spacing: 0.1em;
+  }
+
+  .exp-bullets {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .exp-bullets li {
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.7;
+    position: relative;
+    padding-left: 18px;
+  }
+
+  .exp-bullets li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--accent2);
+    font-size: 10px;
+  }
+
+  /* EDUCATION */
+  #education {
+    background: var(--bg2);
+  }
+
+  .edu-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+  }
+
+  .edu-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 36px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .edu-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-3px);
+  }
+
+  .edu-degree {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-bright);
+    margin-bottom: 6px;
+  }
+
+  .edu-school {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--accent);
+    margin-bottom: 4px;
+    letter-spacing: 0.05em;
+  }
+
+  .edu-meta {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-bottom: 16px;
+    letter-spacing: 0.08em;
+  }
+
+  .edu-courses {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .course-chip {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    padding: 3px 10px;
+    background: rgba(14,45,56,0.6);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    letter-spacing: 0.05em;
+  }
+
+  .edu-gpa {
+    position: absolute;
+    top: 36px; right: 36px;
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--accent);
+  }
+
+  /* CONTACT */
+  #contact {
+    background: var(--bg);
+    text-align: center;
+  }
+
+  .contact-inner {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .contact-email {
+    font-family: var(--font-mono);
+    font-size: 18px;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+    display: block;
+    margin: 24px 0;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .contact-email:hover { color: var(--accent2); }
+
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-top: 32px;
+  }
+
+  .contact-link {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    padding: 10px 24px;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    text-decoration: none;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: all 0.2s;
+  }
+
+  .contact-link:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* FOOTER */
+  footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 24px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .footer-text {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+  }
+
+  .footer-text span { color: var(--accent); }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  @keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+  }
+
+  .animate-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .animate-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .projects-grid { grid-template-columns: 1fr 1fr; }
+    .skills-grid { grid-template-columns: 1fr 1fr; }
+    .hero-terminal { display: none; }
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    section { padding: 80px 24px; }
+    #hero { padding: 0 24px; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .skills-grid { grid-template-columns: 1fr 1fr; }
+    .about-grid { grid-template-columns: 1fr; }
+    .edu-grid { grid-template-columns: 1fr; }
+    .threat-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 8px; text-align: center; }
+    .case-study { padding: 60px 24px 40px; }
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--accent); }
+</style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">APS<span>::</span>sec</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Available for opportunities</div>
+    <h1 class="hero-name">Aryan Pratap<br/><span class="accent">Singh</span></h1>
+    <p class="hero-title">
+      <span class="hl">Security Engineer</span> · Offensive &amp; Defensive · AI Security · Cloud
+    </p>
+    <p class="hero-summary">
+      Cybersecurity graduate student building production-grade security systems — from AI agent policy enforcement
+      and Zero Trust architectures to deep learning threat detection. I think like an attacker and build like a defender.
+    </p>
+    <div class="domain-pills">
+      <span class="pill pill-red">Offensive Security</span>
+      <span class="pill pill-cyan">Application Security</span>
+      <span class="pill pill-green">Cloud Security</span>
+      <span class="pill pill-yellow">Threat Detection</span>
+      <span class="pill pill-cyan">Zero Trust</span>
+      <span class="pill pill-red">AI Security</span>
+      <span class="pill pill-green">OSINT / Recon</span>
+      <span class="pill pill-yellow">Security Engineering</span>
+    </div>
+    <div class="hero-ctas">
+      <a href="#projects" class="btn-primary">View Projects</a>
+      <a href="mailto:aryan.singh2@pace.edu" class="btn-outline">Get In Touch</a>
+    </div>
+  </div>
+
+  <div class="hero-terminal">
+    <div class="terminal-bar">
+      <div class="t-dot t-red"></div>
+      <div class="t-dot t-yellow"></div>
+      <div class="t-dot t-green"></div>
+      <span class="t-title">aryan@kali:~</span>
+    </div>
+    <div class="terminal-body">
+      <div><span class="t-prompt">aryan@kali</span>:<span class="t-accent">~$</span> <span class="t-cmd">whoami</span></div>
+      <div class="t-out">cybersecurity_engineer</div>
+      <div><span class="t-prompt">aryan@kali</span>:<span class="t-accent">~$</span> <span class="t-cmd">cat focus.txt</span></div>
+      <div class="t-out"><span class="t-accent">[+]</span> AI Agent Security</div>
+      <div class="t-out"><span class="t-accent">[+]</span> Zero Trust Architecture</div>
+      <div class="t-out"><span class="t-accent">[+]</span> Threat Detection &amp; ML</div>
+      <div class="t-out"><span class="t-accent">[+]</span> Cloud &amp; Application Security</div>
+      <div><span class="t-prompt">aryan@kali</span>:<span class="t-accent">~$</span> <span class="t-cursor"></span></div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-header animate-in">
+    <div class="section-label">Background</div>
+    <h2 class="section-title">About Me</h2>
+  </div>
+  <div class="about-grid">
+    <div class="about-text animate-in">
+      <p>
+        I operate at the intersection of <span class="highlight">offensive security thinking</span> and
+        <span class="highlight">resilient system design</span>. My work spans building security control planes
+        for AI agents, orchestrating OSINT-driven reconnaissance pipelines, and deploying deep learning
+        models that catch DDoS and MITM attacks before they land.
+      </p>
+      <p>
+        My engineering background in Electronics &amp; Telecommunications gave me a hardware-level mental model
+        of networks — I understand attacks from the signal up. My cybersecurity graduate work at Pace University
+        sharpens that into <span class="highlight">application security, cloud hardening, and incident response</span>.
+      </p>
+      <p>
+        I'm motivated by hard problems at the frontier: as AI agents gain autonomous tool-execution capabilities,
+        the attack surface explodes. I'm building the security primitives — cryptographic identity, risk scoring,
+        policy enforcement — that make those systems safe at scale.
+      </p>
+      <p>
+        My approach: enumerate the threat model before writing line one of code. Every system I build starts
+        with: <span class="highlight">what would an attacker do first?</span>
+      </p>
+    </div>
+    <div class="stat-grid animate-in">
+      <div class="stat-card">
+        <div class="stat-num">3</div>
+        <div class="stat-label">Production Security Projects</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">92%</div>
+        <div class="stat-label">Threat Detection Accuracy</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">3.80</div>
+        <div class="stat-label">MS Cybersecurity GPA</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">4+</div>
+        <div class="stat-label">Security Domains Covered</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">40%</div>
+        <div class="stat-label">Reduction in Manual Monitoring</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">30%</div>
+        <div class="stat-label">Improved Early Detection Rate</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-header animate-in">
+    <div class="section-label">Case Studies</div>
+    <h2 class="section-title">Security Projects</h2>
+  </div>
+  <div class="projects-grid">
+
+    <!-- PROJECT 1: AEGIS -->
+    <div class="project-card card-red animate-in" onclick="openCase('aegis')">
+      <div class="project-num">01 / 03</div>
+      <span class="project-type type-defensive">Security Engineering</span>
+      <h3 class="project-title">Aegis: AI Agent Security Control Plane</h3>
+      <p class="project-tagline">Policy-driven security layer enforcing cryptographic identity verification, risk scoring, and OPA-based authorization for autonomous AI agents before tool execution.</p>
+      <div class="project-tech-row">
+        <span class="tech-badge">FastAPI</span>
+        <span class="tech-badge">OPA</span>
+        <span class="tech-badge">Ed25519</span>
+        <span class="tech-badge">PostgreSQL</span>
+        <span class="tech-badge">Docker</span>
+      </div>
+      <div class="project-impact">
+        <div class="impact-label">Key Security Metric</div>
+        <div class="impact-stat impact-red">Zero Trust · AI Agents</div>
+      </div>
+    </div>
+
+    <!-- PROJECT 2: DIGITAL FOOTPRINT -->
+    <div class="project-card card-cyan animate-in" onclick="openCase('footprint')">
+      <div class="project-num">02 / 03</div>
+      <span class="project-type type-offensive">Offensive / Recon</span>
+      <h3 class="project-title">Digital Footprint Risk Visualizer</h3>
+      <p class="project-tagline">Zero Trust OSINT platform aggregating results from Nikto, W3AF, Skipfish, and Wapiti into a unified dashboard with MFA-gated access and risk exposure visualization.</p>
+      <div class="project-tech-row">
+        <span class="tech-badge">MERN Stack</span>
+        <span class="tech-badge">Docker</span>
+        <span class="tech-badge">Nikto</span>
+        <span class="tech-badge">JWT</span>
+        <span class="tech-badge">ZTA</span>
+      </div>
+      <div class="project-impact">
+        <div class="impact-label">Key Security Metric</div>
+        <div class="impact-stat impact-cyan">4 Scanners · Unified Platform</div>
+      </div>
+    </div>
+
+    <!-- PROJECT 3: DEEP LEARNING THREAT -->
+    <div class="project-card card-green animate-in" onclick="openCase('deeplearning')">
+      <div class="project-num">03 / 03</div>
+      <span class="project-type type-research">Threat Research</span>
+      <h3 class="project-title">Deep Learning Network Threat Detection</h3>
+      <p class="project-tagline">Hybrid GRU-LSTM model deployed on AWS achieving 92% accuracy in forecasting traffic anomalies and detecting DDoS and MITM attacks in real time.</p>
+      <div class="project-tech-row">
+        <span class="tech-badge">GRU-LSTM</span>
+        <span class="tech-badge">AWS EC2/S3/Lambda</span>
+        <span class="tech-badge">Python</span>
+        <span class="tech-badge">Deep Learning</span>
+      </div>
+      <div class="project-impact">
+        <div class="impact-label">Key Security Metric</div>
+        <div class="impact-stat impact-green">92% Accuracy · 40% Less Manual Work</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ CASE STUDY: AEGIS ============ -->
+<div class="case-study" id="case-aegis">
+  <button class="case-close" onclick="closeCase('aegis')">[ ESC ] Close</button>
+  <div class="case-inner">
+    <div class="case-header">
+      <div class="section-label">Case Study · 01</div>
+      <h2 class="section-title">Aegis: Policy-Driven Security Control Plane for Autonomous AI Agents</h2>
+    </div>
+
+    <div class="case-section">
+      <div class="case-section-title"><span class="cs-num">01</span> Project Overview</div>
+      <div class="case-body">
+        <p>Aegis is a security control plane designed to govern autonomous AI agent systems — environments where LLM-based agents execute real-world tools such as API calls, database writes, file modifications, and external service interactions. As agentic AI systems expand in production, the absence of security primitives creates critical gaps in accountability, authorization, and auditability. Aegis closes that gap.</p>
+      </div>
+    </div>
+
+    <div class="case-section">
+      <div class="case-section-title"><span class="cs-num">02</span> Security Problem</div>
+      <div class="case-body">
+        <p>Autonomous AI agents operating without identity verification and policy enforcement represent a new and poorly-understood attack surface. Key vulnerabilities include:</p>
+        <ul>
+          <li>Agents can be impersonated — no cryptographic identity means any process can claim to be a trusted agent</li>
+          <li>Unrestricted tool execution allows privilege escalation, data exfiltration, and lateral movement if an agent is compromised or prompt-injected</li>
+          <li>No audit trail makes forensic investigation of malicious agent actions impossible</li>
+          <li>Without risk scoring, high-impact actions (e.g., deleting production databases) are treated identically to low-risk read operations</li>
+        </ul>
+        <p style="margin-top:12px;color:var(--accent3);">Critical Impact: A compromised or manipulated AI agent with unchecked tool execution is functionally equivalent to a remote code execution vulnerability with persistent access.</p>
+      </div>
+    </div>
+
+    <div class="case-section">
+      <div class="case-section-title"><span class="cs-num">03</span> Threat Model</div>
+      <div class="threat-grid">
+        <div class="threat-box">
+          <div class="threat-box-label">Attacker Profile</div>
+          <div class="threat-box-value">Insider threat, prompt injection adversary, or external attacker who has achieved initial access to an agent's communication channel</div>
+        </div>
+        <div class="threat-box">
+          <div class="threat-box-label">Attack Vectors</div>
+          <div class="threat-box-value">Prompt injection, agent impersonation, replay attacks on signed requests, policy bypass via malformed tool invocations</div>
+        </div>
+        <div class="threat-box">
+          <div class="threat-box-label">Assets at Risk</div>
+          <div class="threat-box-value">Production databases, external APIs, file systems, secrets, and downstream services accessible via agent tools</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="case-section">
+      <div class="case-section-title"><span class="cs-num">04</span> Security Architecture</div>
+      <div class="case-body">
+        <ul>
+          <li><strong style="color:var(--accent);">Cryptographic Identity:</strong> Ed25519-signed requests ensure each agent action is cryptographically attributable. Replay attacks are mitigated via timestamp and nonce validation.</li>
+          <li><strong style="color:var(--accent);">Risk Scoring Engine:</strong> Adaptive scoring evaluates each request against contextual factors (action type, data sensitivity, agent history) and routes to allow, deny, or step-up verification paths.</li>
+          <li><strong style="color:var(--accent);">OPA Policy Enforcement:</strong> Open Policy Agent policies encode least-privilege rules, ensuring agents only execute tools explicitly authorized for their role and context.</li>
+          <li><strong style="color:var(--accent);">Centralized Audit Logging:</strong> All decisions — allow, deny, escalate — are immutably logged to PostgreSQL with full request context for forensic investigation.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="case-section">
+      <div class="case-section-title"><span class="cs-num">05</span> Tools &amp; Technologies</div>
+      <div class="tools-row">
+        <span class="tool-chip">FastAPI</span>
+        <span class="tool-chip">Open Policy Agent (OPA)</span>
+        <span class="tool-chip">Ed25519 Cryptography</span>
+        <span class="tool-chip">PostgreSQL</span>
+        <span class="tool-chip">Docker</span>
+        <span class="tool-chip">Python</span>
+        <span class="tool-chip">JWT</span>
+      </div>
+    </div>
+
+    <div class="case-section">
+      <div class="case-section-title"><span class="cs-num">06</span> Security Impact</div>
+      <div class="case-body">
+        <ul>
+          <li>Eliminates agent impersonation via Ed25519 cryptographic identity for all tool invocations</li>
+          <li>Reduces attack surface of AI agent systems by enforcing least-privilege tool access via OPA policies</li>
+          <li>Provides full forensic audit trail for all agent actions — enabling incident response in agentic environments</li>
+          <li>Adaptive risk scoring prevents high-impact tool execution without step-up verification</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="case-section">
+      <div class="case-section-title"><span class="cs-num">07</span> Lessons Learned</div>
+      <div class="case-body">
+        <ul>
+          <li>Policy-as-code (OPA) scales far better than hardcoded authorization logic — policies can be updated at runtime without redeployment</li>
+          <li>Risk scoring must be contextual, not just action-based; the same tool call can be low or high risk depending on agent state and history</li>
+          <li>Audit logging must be designed at the schema level from day one — retrofitting it breaks forensic integrity</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="case-section">
+      <div class="case-section-title"><span class="cs-num">08</span> Future Improvements</div>
+      <div class="case-body">
+        <ul>
+          <li>Integrate anomaly detection on agent behavior patterns to surface novel attacks not covered by static policies</li>
+          <li>Add SIEM integration (Splunk/ELK) for real-time alerting on high-risk denials</li>
+          <li>Implement prompt injection detection at the control plane layer before tool execution</li>
+          <li>Develop a policy simulation mode to test new OPA rules against historical request logs before production deployment</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="case-section">
+      <div class="case-section-title"><span class="cs-num">09</span> Project Links</div>
+      <div class="links-row">
+        <a href="#" class="case-link">GitHub Repository</a>
+        <a href="#" class="case-link">Architecture Doc</a>
+        <a href="#" class="case-link">Technical Write-up</a>
+        <a href="#" class="case-link">Demo</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ CASE STUDY: DIGITAL FOOTPRINT ============ -->
+<div class="case-study" id="case-footprint">
+  <button class="case-close" onclick="closeCase('footprint')">[ ESC ] Close</button>
+  <div class="case-inner">
+    <div class="case-header">
+      <div class="section-label">Case Study · 02</div>
+      <h2 class="section-title">Digital Footprint Risk Visualizer — Zero Trust OSINT Platform</h2>
+    </div>
+
+    <div class="case-section">
+      <div class="case-section-title"><span class="cs-num">01</span> Project Overview</div>
+      <div class="case-body">
+        <p>A centralized web vulnerability assessment platform that unifies OSINT-driven reconnaissance from four active scanning tools — Nikto, W3AF, Skipfish, and Wapiti — into a single risk dashboard. Security teams previously had to run each tool independently, manually correlate outputs, and prioritize without cross-tool context. This platform eliminates that fragmentation.</p>
+      </div>
+    </div>
+
+    <div class="case-section">
+      <div class="case-section-title"><span class="cs-num">02</span> Security Problem</div>
+      <div class="case-body">
+        <p>Web assets accumulate vulnerabilities over time — misconfigured headers, exposed endpoints, outdated libraries, cloud misconfigurations — that individually appear minor but combine into exploitable attack chains. The challenge was threefold:</p>
+        <ul>
+          <li>Fragmented tool outputs made comprehensive risk analysis slow and error-prone</li>
+          <li>Unrestricted scan execution creates legal and operational risk — any user could trigger aggressive scans against unauthorized targets</li>
+          <li>Without exposure visualization, remediation prioritization was guesswork rather than data-driven</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="case-section">
+      <div class="case-section-title"><span class="cs-num">03</span> Threat Model</div>
+      <div class="threat-grid">
+        <div class="threat-box">
+          <div class="threat-box-label">Attacker Profile</div>
+          <div class="threat-box-value">External attacker performing web reconnaissance; insider misusing scan capabilities against unauthorized targets</div>
+        </div>
+        <div class="threat-box">
+          <div class="threat-box-label">Attack Vectors</div>
+          <div class="threat-box-value">Unauthorized scan execution, credential theft, JWT token forgery, exposed vulnerability data via broken access control</div>
+        </div>
+        <div class="threat-box">
+          <div class="threat-box-label">Assets at Risk</div>
+          <div class="threat-box-value">Target web applications, scan result data (sensitive recon intelligence), platform integrity</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="case-section">
+      <div class="case-section-title"><span class="cs-num">04</span> Attack Methodology (Recon Workflow)</div>
+      <div class="case-body">
+        <ul>
+          <li><strong style="color:var(--accent);">Passive OSINT:</strong> Domain enumeration, DNS interrogation, WHOIS lookups, certificate transparency</li>
+          <li><strong style="color:var(--accent);">Active Web Scanning:</strong> Nikto for server misconfigurations and CVE checks; W3AF for injection and auth vulnerabilities; Skipfish for crawler-based discovery; Wapiti for blind injection and file traversal</li>
+          <li><strong style="color:var(--accent);">Cloud Misconfiguration Detection:</strong> Identifies exposed S3 buckets, open ports, and insecure API endpoints in cloud-hosted infrastructure</li>
+          <li><strong style="color:var(--accent);">Result Correlation:</strong> Aggregates findings across tools, deduplicates, and scores composite risk per endpoint</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="case-section">
+      <div class="case-section-title"><span class="cs-num">05</span> Security Controls Implemented</div>
+      <div class="case-body">
+        <ul>
+          <li><strong style="color:var(--accent);">Zero Trust Architecture:</strong> No implicit trust — every scan request requires authenticated identity, verified permissions, and scope validation</li>
+          <li><strong style="color:var(--accent);">MFA via Google Authenticator:</strong> TOTP-based second factor prevents unauthorized platform access even with stolen credentials</li>
+          <li><strong style="color:var(--accent);">JWT Access Controls:</strong> Short-lived signed tokens enforce least-privilege access to scan execution and result viewing</li>
+          <li><strong style="color:var(--accent);">Docker Tool Isolation:</strong> Each scanner runs in an isolated container — compromise of one tool cannot affect others or the host platform</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="case-section">
+      <div class="case-section-title"><span class="cs-num">06</span> Tools Used</div>
+      <div class="tools-row">
+        <span class="tool-chip">Nikto</span>
+        <span class="tool-chip">W3AF</span>
+        <span class="tool-chip">Skipfish</span>
+        <span class="tool-chip">Wapiti</span>
+        <span class="tool-chip">Docker</span>
+        <span class="tool-chip">React</span>
+        <span class="tool-chip">Node.js</span>
+        <span class="tool-chip">MongoDB</span>
+        <span class="tool-chip">JWT</span>
+        <span class="tool-chip">Google Authenticator</span>
+      </div>
+    </div>
+
+    <div class="case-section">
+      <div class="case-section-title"><span class="cs-num">07</span> Security Impact</div>
+      <div class="case-body">
+        <ul>
+          <li>Unified 4 fragmented scanning workflows into a single authorized, audited platform</li>
+          <li>Zero Trust + MFA eliminated unauthorized scan execution risk</li>
+          <li>Docker isolation reduced tool-to-tool and tool-to-host lateral movement risk</li>
+          <li>Risk visualization enables data-driven remediation prioritization, reducing time-to-fix for critical findings</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="case-section">
+      <div class="case-section-title"><span class="cs-num">08</span> Future Improvements</div>
+      <div class="case-body">
+        <ul>
+          <li>Add CVSS scoring integration to automatically classify and sort findings by severity</li>
+          <li>Implement scan scheduling and delta reporting (only surface new/changed findings)</li>
+          <li>Integrate passive subdomain enumeration and port scanning for full attack surface mapping</li>
+          <li>Add a report generation module for client-deliverable pentest reports</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="case-section">
+      <div class="case-section-title"><span class="cs-num">09</span> Project Links</div>
+      <div class="links-row">
+        <a href="#" class="case-link">GitHub Repository</a>
+        <a href="#" class="case-link">Architecture Doc</a>
+        <a href="#" class="case-link">Technical Write-up</a>
+        <a href="#" class="case-link">Demo</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ CASE STUDY: DEEP LEARNING ============ -->
+<div class="case-study" id="case-deeplearning">
+  <button class="case-close" onclick="closeCase('deeplearning')">[ ESC ] Close</button>
+  <div class="case-inner">
+    <div class="case-header">
+      <div class="section-label">Case Study · 03</div>
+      <h2 class="section-title">Network Traffic Forecasting &amp; Threat Detection Using Deep Learning</h2>
+    </div>
+
+    <div class="case-section">
+      <div class="case-section-title"><span class="cs-num">01</span> Project Overview</div>
+      <div class="case-body">
+        <p>A production-grade threat detection system combining time-series forecasting with anomaly detection to identify DDoS and MITM attacks in network traffic. Deployed on AWS with automated ingestion, model retraining pipelines, and alerting — replacing manual monitoring workflows with a continuously learning detection engine.</p>
+      </div>
+    </div>
+
+    <div class="case-section">
+      <div class="case-section-title"><span class="cs-num">02</span> Security Problem</div>
+      <div class="case-body">
+        <p>Traditional signature-based IDS/IPS fail against novel attack patterns and volumetric floods that evolve between rule updates. DDoS and MITM attacks often blend into baseline traffic, and by the time static thresholds trigger, significant damage has occurred. The need was for a system that learns normal traffic behavior and flags deviations in real time.</p>
+        <ul>
+          <li>DDoS attacks can saturate infrastructure within minutes — manual monitoring is too slow</li>
+          <li>MITM attacks often operate at low volume, evading threshold-based detection entirely</li>
+          <li>Static rule sets cannot adapt to evolving attack patterns without continuous human maintenance</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="case-section">
+      <div class="case-section-title"><span class="cs-num">03</span> Threat Model</div>
+      <div class="threat-grid">
+        <div class="threat-box">
+          <div class="threat-box-label">Attacker Profile</div>
+          <div class="threat-box-value">Botnet operators (DDoS), nation-state or targeted attackers performing network interception (MITM), insider threat actors</div>
+        </div>
+        <div class="threat-box">
+          <div class="threat-box-label">Attack Vectors</div>
+          <div class="threat-box-value">Volumetric flood attacks, ARP/DNS poisoning, BGP hijacking, SSL stripping, adversarial traffic shaping to evade detection</div>
+        </div>
+        <div class="threat-box">
+          <div class="threat-box-label">Assets at Risk</div>
+          <div class="threat-box-value">Network availability, data-in-transit confidentiality, user session integrity, downstream service SLAs</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="case-section">
+      <div class="case-section-title"><span class="cs-num">04</span> Technical Architecture</div>
+      <div class="case-body">
+        <ul>
+          <li><strong style="color:var(--accent);">GRU-LSTM Hybrid:</strong> GRU layers capture short-term traffic pattern shifts; LSTM layers model long-range temporal dependencies — together achieving higher accuracy than either architecture alone</li>
+          <li><strong style="color:var(--accent);">Feature Engineering:</strong> Packet rate, flow duration, byte ratios, inter-arrival times, and protocol distributions extracted as model inputs</li>
+          <li><strong style="color:var(--accent);">AWS Pipeline:</strong> EC2 for model serving, S3 for training data versioning, Lambda for real-time alert triggers on anomaly score thresholds</li>
+          <li><strong style="color:var(--accent);">Automated Retraining:</strong> Scheduled pipeline ingests new traffic captures, retrains on updated data, and deploys updated model weights — the system learns continuously</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="case-section">
+      <div class="case-section-title"><span class="cs-num">05</span> Tools Used</div>
+      <div class="tools-row">
+        <span class="tool-chip">Python</span>
+        <span class="tool-chip">TensorFlow / Keras</span>
+        <span class="tool-chip">GRU-LSTM</span>
+        <span class="tool-chip">AWS EC2</span>
+        <span class="tool-chip">AWS S3</span>
+        <span class="tool-chip">AWS Lambda</span>
+        <span class="tool-chip">Pandas / NumPy</span>
+        <span class="tool-chip">Scikit-learn</span>
+      </div>
+    </div>
+
+    <div class="case-section">
+      <div class="case-section-title"><span class="cs-num">06</span> Security Impact</div>
+      <div class="case-body">
+        <ul>
+          <li><strong style="color:var(--accent2);">92% detection accuracy</strong> on DDoS and MITM attack classification</li>
+          <li><strong style="color:var(--accent2);">30% improvement</strong> in early-stage threat detection vs. baseline statistical models</li>
+          <li><strong style="color:var(--accent2);">40% reduction</strong> in manual monitoring effort via automated AWS alerting workflows</li>
+          <li>Continuous learning pipeline eliminates need for manual signature updates</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="case-section">
+      <div class="case-section-title"><span class="cs-num">07</span> Lessons Learned</div>
+      <div class="case-body">
+        <ul>
+          <li>Model accuracy is meaningless without low false-positive rates — a 92% accurate model that fires 1000 false alerts per day creates alert fatigue worse than no detection</li>
+          <li>Feature selection matters more than model complexity — the right traffic features outperform a larger model on poor features</li>
+          <li>Deployment infrastructure (pipeline, alerting, retraining) is as critical as model performance for real-world security value</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="case-section">
+      <div class="case-section-title"><span class="cs-num">08</span> Future Improvements</div>
+      <div class="case-body">
+        <ul>
+          <li>Implement adversarial robustness — train against adversarially crafted traffic designed to evade the model</li>
+          <li>Add explainability layer (SHAP values) to surface which traffic features triggered each alert</li>
+          <li>Integrate with SIEM (Splunk) for correlated alerting with other security signals</li>
+          <li>Extend to encrypted traffic analysis using flow-level metadata without decryption</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="case-section">
+      <div class="case-section-title"><span class="cs-num">09</span> Project Links</div>
+      <div class="links-row">
+        <a href="#" class="case-link">GitHub Repository</a>
+        <a href="#" class="case-link">Research Paper</a>
+        <a href="#" class="case-link">Technical Write-up</a>
+        <a href="#" class="case-link">Demo</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider"/>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-header animate-in">
+    <div class="section-label">Capabilities</div>
+    <h2 class="section-title">Technical Skills</h2>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-category animate-in">
+      <div class="skill-cat-title">Security Tools</div>
+      <ul class="skill-list">
+        <li>Burp Suite</li>
+        <li>Metasploit</li>
+        <li>Nmap</li>
+        <li>Nikto / W3AF / Wapiti</li>
+        <li>Hydra / John the Ripper</li>
+        <li>Snort (IDS/IPS)</li>
+        <li>Splunk (SIEM)</li>
+      </ul>
+    </div>
+    <div class="skill-category animate-in">
+      <div class="skill-cat-title">Programming</div>
+      <ul class="skill-list">
+        <li>Python</li>
+        <li>Bash Scripting</li>
+        <li>SQL</li>
+        <li>JavaScript (Node.js)</li>
+        <li>React</li>
+      </ul>
+    </div>
+    <div class="skill-category animate-in">
+      <div class="skill-cat-title">Cloud &amp; DevSecOps</div>
+      <ul class="skill-list">
+        <li>AWS (EC2, S3, IAM, Lambda)</li>
+        <li>Docker</li>
+        <li>IAM Policy Hardening</li>
+        <li>Cloud Misconfiguration Analysis</li>
+        <li>Container Security</li>
+      </ul>
+    </div>
+    <div class="skill-category animate-in">
+      <div class="skill-cat-title">Application Security</div>
+      <ul class="skill-list">
+        <li>OWASP Top 10</li>
+        <li>Web Vulnerability Assessment</li>
+        <li>JWT / Auth Security</li>
+        <li>SQL Injection / XSS</li>
+        <li>API Security</li>
+      </ul>
+    </div>
+    <div class="skill-category animate-in">
+      <div class="skill-cat-title">Identity &amp; Access</div>
+      <ul class="skill-list">
+        <li>Zero Trust Architecture</li>
+        <li>Open Policy Agent (OPA)</li>
+        <li>MFA / TOTP</li>
+        <li>Ed25519 Cryptography</li>
+        <li>Least Privilege Design</li>
+      </ul>
+    </div>
+    <div class="skill-category animate-in">
+      <div class="skill-cat-title">Threat &amp; Detection</div>
+      <ul class="skill-list">
+        <li>Anomaly Detection (ML)</li>
+        <li>SIEM / Log Analysis</li>
+        <li>Incident Response</li>
+        <li>Threat Modeling</li>
+        <li>IDS/IPS Concepts</li>
+      </ul>
+    </div>
+    <div class="skill-category animate-in">
+      <div class="skill-cat-title">Operating Systems</div>
+      <ul class="skill-list">
+        <li>Kali Linux</li>
+        <li>Ubuntu / Debian</li>
+        <li>Windows Security</li>
+        <li>macOS</li>
+      </ul>
+    </div>
+    <div class="skill-category animate-in">
+      <div class="skill-cat-title">Cryptography</div>
+      <ul class="skill-list">
+        <li>Ed25519 / Public Key Crypto</li>
+        <li>JWT / Token Security</li>
+        <li>TLS/SSL Analysis</li>
+        <li>Applied Cryptography</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-header animate-in">
+    <div class="section-label">Work History</div>
+    <h2 class="section-title">Experience</h2>
+  </div>
+  <div class="exp-timeline">
+
+    <div class="exp-item animate-in">
+      <div class="exp-date">Jun 2021 — May 2023</div>
+      <div class="exp-role">Program Executive — Cybersecurity Outreach</div>
+      <div class="exp-company">Indian Society for Technical Education (ISTE)</div>
+      <ul class="exp-bullets">
+        <li>Organized cybersecurity awareness workshops, guest lectures, and technical events focused on threat landscape education, social engineering defense, and security hygiene practices.</li>
+        <li>Led security-themed outreach campaigns that grew student security community participation by 20%, expanding the pipeline of security-aware engineers.</li>
+        <li>Developed and delivered technical content on vulnerability classes, attack methodologies, and defensive frameworks to non-specialist student audiences.</li>
+      </ul>
+    </div>
+
+    <div class="exp-item animate-in">
+      <div class="exp-date">Dec 2022 — Jan 2023</div>
+      <div class="exp-role">Telecom Security Intern</div>
+      <div class="exp-company">Western Indian Railway — Telecom Department</div>
+      <ul class="exp-bullets">
+        <li>Supported security-critical maintenance and hardening of communication systems across live operational railway infrastructure — a high-availability environment where failures carry safety implications.</li>
+        <li>Assisted in troubleshooting connectivity failures and identifying configuration vulnerabilities in operational communication infrastructure, supporting remediation before issues escalated to incidents.</li>
+        <li>Maintained detailed technical documentation of system states, observed anomalies, and remediation steps — building the audit trail essential for post-incident analysis.</li>
+        <li>Applied preventive maintenance discipline to reduce systemic risk exposure in communication infrastructure serving active rail operations.</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-header animate-in">
+    <div class="section-label">Academic Background</div>
+    <h2 class="section-title">Education</h2>
+  </div>
+  <div class="edu-grid">
+    <div class="edu-card animate-in">
+      <div class="edu-gpa">3.80</div>
+      <div class="edu-degree">M.S. in Cybersecurity</div>
+      <div class="edu-school">Pace University — Seidenberg School of CS &amp; IS</div>
+      <div class="edu-meta">Sep 2025 – Present · New York, NY</div>
+      <div class="edu-courses">
+        <span class="course-chip">Advanced Network Security</span>
+        <span class="course-chip">Cloud Security Architecture</span>
+        <span class="course-chip">Penetration Testing</span>
+        <span class="course-chip">Incident Response &amp; Threat Hunting</span>
+        <span class="course-chip">Applied Cryptography</span>
+        <span class="course-chip">Malware Analysis</span>
+        <span class="course-chip">Digital Forensics</span>
+        <span class="course-chip">Secure Systems Design</span>
+      </div>
+    </div>
+    <div class="edu-card animate-in">
+      <div class="edu-gpa">3.0</div>
+      <div class="edu-degree">B.E. in Electronics &amp; Telecom Engineering</div>
+      <div class="edu-school">St. Francis Institute of Technology, Mumbai</div>
+      <div class="edu-meta">Jun 2020 – May 2024 · Honours in Cybersecurity</div>
+      <div class="edu-courses">
+        <span class="course-chip">Honours in Cybersecurity</span>
+        <span class="course-chip">Network Protocols</span>
+        <span class="course-chip">Signal Processing</span>
+        <span class="course-chip">Embedded Systems</span>
+        <span class="course-chip">Communications Security</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cert -->
+  <div style="margin-top:32px;" class="animate-in">
+    <div class="section-label" style="margin-bottom:16px;">Certifications</div>
+    <div class="skill-category" style="max-width:400px;">
+      <div class="skill-cat-title">Credentials</div>
+      <ul class="skill-list">
+        <li>Google Cybersecurity Professional Certificate</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner animate-in">
+    <div class="section-label" style="justify-content:center;">Get In Touch</div>
+    <h2 class="section-title">Let's Build Something Secure</h2>
+    <p style="margin-top:16px;color:var(--text-dim);font-size:13px;line-height:1.8;">
+      Open to Security Engineer, Application Security, Offensive Security, and SOC Analyst roles.<br/>
+      Based in New York · Available immediately
+    </p>
+    <a href="mailto:aryan.singh2@pace.edu" class="contact-email">aryan.singh2@pace.edu</a>
+    <p style="font-family:var(--font-mono);font-size:12px;color:var(--text-dim);">+1 (201) 469-6151</p>
+    <div class="contact-links">
+      <a href="https://linkedin.com/in/aryan-singh-rootkid" class="contact-link" target="_blank">LinkedIn</a>
+      <a href="mailto:aryan.singh2@pace.edu" class="contact-link">Email</a>
+      <a href="#" class="contact-link">GitHub</a>
+      <a href="#" class="contact-link">Resume PDF</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-text">Aryan Pratap Singh · <span>Cybersecurity Engineer</span></div>
+  <div class="footer-text"><span>©</span> 2026 · Built for security roles · New York, NY</div>
+</footer>
+
+<!-- ============ FAANG OPTIMIZATION PANEL ============ -->
+<section style="background:var(--surface);border-top:2px solid var(--accent3);padding:80px 48px;" id="faang-tips">
+  <div class="section-header animate-in">
+    <div class="section-label" style="color:var(--accent3);">FAANG Optimization Report</div>
+    <h2 class="section-title">Portfolio Upgrade Roadmap</h2>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;" class="animate-in">
+
+    <div class="skill-category" style="border-color:rgba(255,62,62,0.3);">
+      <div class="skill-cat-title" style="color:var(--accent3);">Strengthen Each Project</div>
+      <ul class="skill-list">
+        <li style="color:var(--text);">Aegis: Add a benchmark — "reduced unauthorized tool executions to zero in X hours of test traffic"</li>
+        <li style="color:var(--text);">Aegis: Publish the OPA policy schema on GitHub with documentation</li>
+        <li style="color:var(--text);">Digital Footprint: Add a CVSS-scored finding from a real scan against a test target (DVWA, HackTheBox)</li>
+        <li style="color:var(--text);">Digital Footprint: Document a real vulnerability discovered — even a self-hosted target</li>
+        <li style="color:var(--text);">Deep Learning: Publish model training code, dataset (KDD Cup 99 or CICIDS2017), and evaluation notebook</li>
+        <li style="color:var(--text);">Deep Learning: Add confusion matrix, ROC curve, and false positive rate metrics</li>
+      </ul>
+    </div>
+
+    <div class="skill-category" style="border-color:rgba(255,214,0,0.3);">
+      <div class="skill-cat-title" style="color:var(--accent4);">Additional Projects to Build</div>
+      <ul class="skill-list">
+        <li style="color:var(--text);">CTF Write-ups: Document 5-10 HackTheBox / TryHackMe solutions with full methodology</li>
+        <li style="color:var(--text);">Home Lab: Build a SIEM pipeline (ELK or Splunk) ingesting real network traffic with custom detection rules</li>
+        <li style="color:var(--text);">Web App Pentest: Full methodology on DVWA or a bug bounty target (Bugcrowd/HackerOne) with report</li>
+        <li style="color:var(--text);">Secrets Scanner: CLI tool to scan codebases for leaked credentials / API keys</li>
+        <li style="color:var(--text);">Threat Intel Feed: Ingest IOCs from MISP/AlienVault and build a hunting dashboard</li>
+      </ul>
+    </div>
+
+    <div class="skill-category" style="border-color:rgba(0,229,255,0.3);">
+      <div class="skill-cat-title" style="color:var(--accent);">Missing Technical Depth</div>
+      <ul class="skill-list">
+        <li style="color:var(--text);">No public GitHub — every project needs a repository with README and architecture diagrams</li>
+        <li style="color:var(--text);">No CTF / HackTheBox profile — add a link and rank</li>
+        <li style="color:var(--text);">No certifications beyond Google cert — pursue OSCP, CEH, or AWS Security Specialty</li>
+        <li style="color:var(--text);">No published write-ups — technical blog posts on Medium or personal site signal depth to hiring managers</li>
+        <li style="color:var(--text);">No red team tooling experience — build or document use of C2 frameworks (Cobalt Strike concepts, Sliver)</li>
+      </ul>
+    </div>
+
+    <div class="skill-category" style="border-color:rgba(0,255,136,0.3);">
+      <div class="skill-cat-title" style="color:var(--accent2);">FAANG Competitive Improvements</div>
+      <ul class="skill-list">
+        <li style="color:var(--text);">Quantify everything — "reduced attack surface by X%", "detected Y attack patterns", "processed Z requests/sec"</li>
+        <li style="color:var(--text);">Add STRIDE or PASTA threat model diagrams to each project</li>
+        <li style="color:var(--text);">Reference MITRE ATT&amp;CK techniques in threat models (e.g., T1190 - Exploit Public-Facing Application)</li>
+        <li style="color:var(--text);">Align projects to OWASP ASVS / NIST CSF to show framework fluency</li>
+        <li style="color:var(--text);">Interview prep: be ready to whiteboard the full architecture + threat model for each project</li>
+        <li style="color:var(--text);">Consider contributing to an open-source security tool — shows community engagement</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  // Case study open/close
+  function openCase(id) {
+    document.getElementById('case-' + id).classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeCase(id) {
+    document.getElementById('case-' + id).classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  // ESC key close
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.case-study.active').forEach(function(el) {
+        el.classList.remove('active');
+        document.body.style.overflow = '';
+      });
+    }
+  });
+
+  // Scroll animations
+  const observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.animate-in').forEach(function(el) {
+    observer.observe(el);
+  });
+
+  // Skill bar animation (decorative - bars fill on scroll)
+  document.querySelectorAll('.skill-fill').forEach(function(bar) {
+    bar.style.width = '0%';
+    setTimeout(function() {
+      bar.style.width = bar.getAttribute('data-width') || '80%';
+    }, 500);
+  });
+</script>
+</body>
+</html>
